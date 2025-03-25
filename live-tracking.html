@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Tracking - AMR Robot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Live Tracking</h1>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Robot Status</h2>
+        <p id="status">Status: Loading...</p>
+        <p id="distance">Distance: Loading...</p>
+        <h2>Warehouse Navigation Map</h2>
+
+    <div class="map-holder">
+        <div class="map-container">
+            <canvas id="pathCanvas" width="1500" height="1000"></canvas>
+                <div class="block red-block" id="raw-load" style="left:1100px; top:100px;">Raw Load</div>
+                <div class="block yellow-block" id="un1" style="left:500px; top:250px;">UN 1</div>
+                <div class="block yellow-block" id="un2" style="left:500px; top:500px;">UN 2</div>
+                <div class="block blue-block" id="parking" style="left:1000px; top:800px;">Parking</div>
+            </div>
+        </div>
+        <p id="status">Click on "Raw Load" first, then click on a destination.</p>
+        <button class="reset-btn" onclick="resetPath()">Reset Path</button>
+        <div class="zoom-controls">
+            <button onclick="zoomIn()">+</button>
+            <button onclick="zoomOut()">-</button>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

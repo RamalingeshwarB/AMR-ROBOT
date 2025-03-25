@@ -1,0 +1,187 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Header */
+header {
+    background: linear-gradient(90deg, #047af8, #0350a2);
+    color: white;
+    padding: 15px 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    padding: 12px 20px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* Progress Updates */
+.progress-log {
+    background: white;
+    padding: 20px;
+    margin: 15px;
+    border-left: 5px solid #007bff;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* Data Logs Chart */
+#chart_div {
+    width: 100%;
+    max-width: 900px;
+    height: 500px;
+    margin: auto;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 15px;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav a {
+        display: block;
+        padding: 10px;
+    }
+
+    button {
+        width: 90%;
+    }
+}
+#overview {
+    text-align: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+}
+
+#overview h2 {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+#overview ul {
+    list-style: none;
+    padding: 0;
+}
+
+#overview ul li {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+#overview button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#overview button:hover {
+    background-color: #218838;
+}
+
+
+/*new*/
+.map-holder {
+    width: 800px;
+    height: 600px;
+    border: 3px solid #333;
+    margin: 20px auto;
+    position: relative;
+    background: white;
+    overflow: auto;
+}
+
+.map-container {
+    width: 1500px;
+    height: 1000px;
+    background-color: #ddd;
+    position: absolute;
+}
+
+/* Blocks (Raw Load, UN1, UN2, Parking) */
+.block {
+    width: 180px;
+    height: 120px;
+    text-align: center;
+    line-height: 120px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid black;
+    position: absolute;
+    cursor: pointer;
+}
+
+.block:hover {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+
+.red-block { background-color: red; color: white; }
+.yellow-block { background-color: yellow; }
+.blue-block { background-color: blue; color: white; }
+
+/* Zoom Controls */
+.zoom-controls {
+    margin-top: 10px;
+}
+
+.zoom-controls button {
+    padding: 10px;
+    font-size: 20px;
+    margin: 5px;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.zoom-controls button:hover {
+    background: #0056b3;
+}
+
+/* Reset Button */
+.reset-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.reset-btn:hover {
+    background: #218838;
+}
+
+

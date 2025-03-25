@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Logs</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Data Logs</h1>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Navigation History</h2>
+        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+    </main>
+
+    <script>
+        google.charts.load('current', {packages:['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            let data = google.visualization.arrayToDataTable([
+                ['Time', 'Distance'],
+                ['10s', 50],
+                ['20s', 40],
+                ['30s', 60]
+            ]);
+
+            let options = { title: 'Robot Distance Log' };
+            let chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</body>
+</html>
