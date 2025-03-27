@@ -27,7 +27,6 @@ nav a:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
-
 /* Progress Updates */
 .progress-log {
     background: white;
@@ -71,6 +70,8 @@ footer {
         width: 90%;
     }
 }
+
+/* Overview Section */
 #overview {
     text-align: center;
     padding: 40px;
@@ -107,8 +108,7 @@ footer {
     background-color: #218838;
 }
 
-
-/*new*/
+/* Map and Blocks */
 .map-holder {
     width: 800px;
     height: 600px;
@@ -137,12 +137,15 @@ footer {
     border: 2px solid black;
     position: absolute;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
 
+/* Enhanced Hover Effect */
 .block:hover {
-            transform: scale(0.95);
-            opacity: 0.8;
-        }
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
+}
 
 .red-block { background-color: red; color: white; }
 .yellow-block { background-color: yellow; }
@@ -184,4 +187,122 @@ footer {
     background: #218838;
 }
 
+/* ====== PROFESSIONAL BUTTONS STYLING ====== */
 
+/* General Button Styling */
+button {
+    padding: 12px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Split Button Container */
+.split-button {
+    display: inline-flex;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Main Button in Split Button */
+.split-button button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+}
+
+/* Dropdown Toggle Button */
+.split-button .dropdown-toggle {
+    background-color: #0056b3;
+    color: white;
+    border-left: 1px solid white;
+    padding: 12px;
+    cursor: pointer;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 150px;
+    z-index: 10;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Show dropdown menu */
+.split-button .dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Dropdown Button Styling */
+.dropdown-menu button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: left;
+    background: white;
+    color: black;
+    border: none;
+    font-size: 14px;
+}
+
+/* Hover Effect */
+.dropdown-menu button:hover {
+    background: #007bff;
+    color: white;
+}
+
+/* Control Buttons */
+.control-btn {
+    background-color: #28a745;
+}
+
+.control-btn:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .map-holder {
+        width: 100%;
+        height: auto;
+        overflow-x: auto;
+    }
+
+    .map-container {
+        width: 1200px;
+        height: 800px;
+    }
+
+    .split-button {
+        width: 100%;
+    }
+
+    .split-button button {
+        width: 100%;
+        text-align: center;
+    }
+}

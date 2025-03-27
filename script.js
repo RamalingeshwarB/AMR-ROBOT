@@ -58,8 +58,11 @@ function generatePath(start, end) {
     const endY = parseInt(end.style.top) / gridSize;
 
     let path = findPath(startX, startY, endX, endY);
-    console.log("Generated Path:", path); // Debugging
+    console.log("Generated Path:", path);
     drawPath(path);
+
+    // Send movement commands to the robot
+    sendPathToRobot(path);
 }
 
 // Priority Queue
@@ -140,6 +143,33 @@ function drawPath(path) {
 
     ctx.stroke();
     updateStatus("Path generated successfully!");
+}
+
+// **NEW FUNCTION: Send movement commands to ESP32**
+function sendPathToRobot(path) {
+    if (!socket || socket.readyState !== WebSocket.OPEN) {
+        console.log("WebSocket not connected!");
+        return;
+    }
+
+    let commands = [];
+    for (let i = 1; i < path.length; i++) {
+        let dx = path[i].x - path[i - 1].x;
+        let dy = path[i].y - path[i - 1].y;
+
+        let direction = "";
+        if (dx === 1) direction = "right";
+        else if (dx === -1) direction = "left";
+        else if (dy === 1) direction = "down";
+        else if (dy === -1) direction = "up";
+
+        commands.push({ direction, distance: gridSize });
+    }
+
+    console.log("Sending Path Commands:", commands);
+
+    // Send path data to ESP32
+    socket.send(JSON.stringify({ command: "follow_path", path: commands }));
 }
 
 // Reset Path

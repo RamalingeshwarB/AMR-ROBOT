@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Tracking - AMR Robot</title>
+    <title>Live Tracking</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header>
         <h1>Live Tracking</h1>
         <nav>
             <a href="index.html">Home</a>
+            <a href="progress.html">Progress Updates</a>
+            <a href="data-logs.html">Data Logs</a>
         </nav>
     </header>
 
     <main>
-        <h2>Robot Status</h2>
-        <p id="status">Status: Loading...</p>
-        <p id="distance">Distance: Loading...</p>
-        <h2>Warehouse Navigation Map</h2>
+        <h2>Live Robot Tracking</h2>
+        <div class="tracking-info">
+            <p><strong>Position:</strong> <span id="position">X: 0, Y: 0</span></p>
+            <p><strong>Distance:</strong> <span id="distance">0 cm</span> </p>
+            <p><strong>Status:</strong> <span id="status">Idle</span></p>
+        </div>
 
-    <div class="map-holder">
+        <!-- Warehouse Navigation Map -->
+        <h2>Warehouse Navigation Map</h2>
+        <div class="map-holder">
         <div class="map-container">
             <canvas id="pathCanvas" width="1500" height="1000"></canvas>
                 <div class="block red-block" id="raw-load" style="left:1100px; top:100px;">Raw Load</div>
@@ -35,7 +42,34 @@
             <button onclick="zoomIn()">+</button>
             <button onclick="zoomOut()">-</button>
         </div>
+	<div class="dropdown">
+    <button>Start</button>
+    <div class="dropdown-content">
+        <a href="#" onclick="startNow()">Start Now</a>
+        <a href="#" onclick="customStart()">Custom Start</a>
+    </div>
+</div>
+
+<div class="dropdown">
+    <button>Stop</button>
+    <div class="dropdown-content">
+        <a href="#" onclick="stopNow()">Stop Now</a>
+        <a href="#" onclick="customStop()">Custom Stop</a>
+    </div>
+</div>
+
+<div class="dropdown">
+    <button>Path Change</button>
+    <div class="dropdown-content">
+        <a href="#" onclick="changePath()">Change Path</a>
+        <a href="#" onclick="changeStart()">Change Start Location</a>
+        <a href="#" onclick="changeDestination()">Change Destination</a>
+        <a href="#" onclick="multiLevelPaths()">Multi-Level Path</a>
+    </div>
+</div>
+
     </main>
     <script src="script.js"></script>
 </body>
 </html>
+
