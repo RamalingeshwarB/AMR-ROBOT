@@ -21,55 +21,54 @@
         <h2>Live Robot Tracking</h2>
         <div class="tracking-info">
             <p><strong>Position:</strong> <span id="position">X: 0, Y: 0</span></p>
-            <p><strong>Distance:</strong> <span id="distance">0 cm</span> </p>
+            <p><strong>Distance:</strong> <span id="distance">0 cm</span></p>
             <p><strong>Status:</strong> <span id="status">Idle</span></p>
         </div>
 
         <!-- Warehouse Navigation Map -->
         <h2>Warehouse Navigation Map</h2>
         <div class="map-holder">
-        <div class="map-container">
-            <canvas id="pathCanvas" width="1500" height="1000"></canvas>
+            <div class="map-container">
+                <canvas id="pathCanvas" width="1500" height="1000"></canvas>
                 <div class="block red-block" id="raw-load" style="left:1100px; top:100px;">Raw Load</div>
                 <div class="block yellow-block" id="un1" style="left:500px; top:250px;">UN 1</div>
                 <div class="block yellow-block" id="un2" style="left:500px; top:500px;">UN 2</div>
                 <div class="block blue-block" id="parking" style="left:1000px; top:800px;">Parking</div>
             </div>
         </div>
+
         <p id="status">Click on "Raw Load" first, then click on a destination.</p>
         <button class="reset-btn" onclick="resetPath()">Reset Path</button>
         <div class="zoom-controls">
             <button onclick="zoomIn()">+</button>
             <button onclick="zoomOut()">-</button>
         </div>
-	<div class="dropdown">
-    <button>Start</button>
-    <div class="dropdown-content">
-        <a href="#" onclick="startNow()">Start Now</a>
-        <a href="#" onclick="customStart()">Custom Start</a>
-    </div>
-</div>
 
-<div class="dropdown">
-    <button>Stop</button>
-    <div class="dropdown-content">
-        <a href="#" onclick="stopNow()">Stop Now</a>
-        <a href="#" onclick="customStop()">Custom Stop</a>
-    </div>
-</div>
+        <!-- Start Dropdown -->
+        <div class="dropdown">
+            <button>Start</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="startNow()">Start Now</a>
+                <a href="#" onclick="customStart()">Start with Delay</a>
+            </div>
+        </div>
 
-<div class="dropdown">
-    <button>Path Change</button>
-    <div class="dropdown-content">
-        <a href="#" onclick="changePath()">Change Path</a>
-        <a href="#" onclick="changeStart()">Change Start Location</a>
-        <a href="#" onclick="changeDestination()">Change Destination</a>
-        <a href="#" onclick="multiLevelPaths()">Multi-Level Path</a>
-    </div>
-</div>
+        <!-- Stop Dropdown -->
+        <div class="dropdown">
+            <button>Stop</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="stopNow()">Stop Now</a>
+                <a href="#" onclick="customStop()">Stop with Options</a>
+            </div>
+        </div>
 
+        <!-- Path Control Dropdown -->
+        <div class="dropdown">
+            <button>Path Change</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="changeDestination()">Change Destination</a>
+            </div>
+        </div>
     </main>
-    <script src="script.js"></script>
 </body>
 </html>
-

@@ -1,45 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Logs</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Robot Data Logs</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Data Logs</h1>
-        <nav>
-            <nav>
-            <a href="index.html">Home</a>
-	    <a href="live-tracking.html">Live Tracking</a>
-            <a href="progress.html">Progress Updates</a>
-        </nav>
+  <header>
+    <h1>Robot Data Logs</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="live-tracking.html">Live Tracking</a>
+      <a href="progress.html">Progress Updates</a>
+    </nav>
+  </header>
 
-        </nav>
-    </header>
-    <main>
-        <h2>Navigation History</h2>
-        <div id="chart_div" style="width: 100%; height: 500px;"></div>
-    </main>
+  <main>
+    <h2>Performance Charts</h2>
+    <div id="distance_chart_div" style="width:100%; height:400px;"></div>
+    <div id="speed_chart_div" style="width:100%; height:400px;"></div>
+    <div id="task_completion_chart_div" style="width:100%; height:400px;"></div>
+    <div id="navigation_path_chart_div" style="width:100%; height:400px;"></div>
+    <button onclick="exportToExcel()">Download All Data (Excel)</button>
+  </main>
 
-    <script>
-        google.charts.load('current', {packages:['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+  <script>
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawAllCharts);
 
-        function drawChart() {
-            let data = google.visualization.arrayToDataTable([
-                ['Time', 'Distance'],
-                ['10s', 50],
-                ['20s', 40],
-                ['30s', 60]
-            ]);
+    let distanceData = [['Time', 'Distance'], [0, 0]];
+    let speedData = [['Time', 'Speed'], [0, 0]];
+    let taskCompletionData = [['Task', 'Time'], ['Task 1', 0]];
+    let navPathData = [['X', 'Y'], [0, 0]];
 
-            let options = { title: 'Robot Distance Log' };
-            let chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
+    let socket;
+    try {
+      socket = new WebSocket("ws://192.168.4.1:81/");
+      socket.onopen = () => console.log("Connected to ESP32 WebSocket");
+
+      socket.onmessage = (event) => {
+        let data = JSON.parse(event.data);
+
+        const now = new Date();
+        const seconds = now.getSeconds() + now.getMinutes() * 60;
+
+        if (data.distance !== undefined) {
+          distanceData.push([seconds, data.distance]);
+          if (distanceData.length > 20) distanceData.splice(1, 1);
         }
-    </script>
+
+        if (data.speed !== undefined) {
+          speedData.push([seconds, data.speed]);
+          if (speedData.length > 20) speedData.splice(1, 1);
+        }
+
+        if (data.task_time !== undefined) {
+          taskCompletionData.push([`Task ${taskCompletionData.length}`, data.task_time]);
+          if (taskCompletionData.length > 20) taskCompletionData.splice(1, 1);
+        }
+
+        if (data.position) {
+          navPathData.push([data.position.x, data.position.y]);
+          if (navPathData.length > 20) navPathData.splice(1, 1);
+        }
+
+        drawAllCharts();
+      };
+    } catch (e) {
+      console.log("WebSocket not available. Showing default data.");
+    }
+
+    function drawAllCharts() {
+      const distanceChart = new google.visualization.LineChart(document.getElementById("distance_chart_div"));
+      distanceChart.draw(google.visualization.arrayToDataTable(distanceData), {
+        title: "Distance Covered",
+        hAxis: { title: "Time (s)" },
+        vAxis: { title: "Distance (cm)" }
+      });
+
+      const speedChart = new google.visualization.LineChart(document.getElementById("speed_chart_div"));
+      speedChart.draw(google.visualization.arrayToDataTable(speedData), {
+        title: "Speed Over Time",
+        hAxis: { title: "Time (s)" },
+        vAxis: { title: "Speed (cm/s)" }
+      });
+
+      const taskChart = new google.visualization.ColumnChart(document.getElementById("task_completion_chart_div"));
+      taskChart.draw(google.visualization.arrayToDataTable(taskCompletionData), {
+        title: "Task Completion Time",
+        hAxis: { title: "Task" },
+        vAxis: { title: "Time (s)" }
+      });
+
+      const pathChart = new google.visualization.ScatterChart(document.getElementById("navigation_path_chart_div"));
+      pathChart.draw(google.visualization.arrayToDataTable(navPathData), {
+        title: "Navigation Path",
+        hAxis: { title: "X" },
+        vAxis: { title: "Y" }
+      });
+    }
+
+    function exportToExcel() {
+      const wb = XLSX.utils.book_new();
+
+      const sheet1 = XLSX.utils.aoa_to_sheet(distanceData);
+      const sheet2 = XLSX.utils.aoa_to_sheet(speedData);
+      const sheet3 = XLSX.utils.aoa_to_sheet(taskCompletionData);
+      const sheet4 = XLSX.utils.aoa_to_sheet(navPathData);
+
+      XLSX.utils.book_append_sheet(wb, sheet1, "Distance");
+      XLSX.utils.book_append_sheet(wb, sheet2, "Speed");
+      XLSX.utils.book_append_sheet(wb, sheet3, "Tasks");
+      XLSX.utils.book_append_sheet(wb, sheet4, "Path");
+
+      XLSX.writeFile(wb, "robot_data.xlsx");
+    }
+
+    // Draw charts even if no data from ESP32
+    setInterval(drawAllCharts, 5000);
+  </script>
 </body>
 </html>
